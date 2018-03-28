@@ -20,7 +20,8 @@ let d = [1, 2, 3];
 console.log(c == d);
 
 console.log( +"Infinity" ); 
+console.log(typeof(+"Infinity"));
 
-console.log("ёжик" > "яблоко");
+console.log("Ёжик" > "яблоко");
 
 console.log(0 || "" || 2 || undefined || true || falsе);

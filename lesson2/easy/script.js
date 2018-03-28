@@ -11,21 +11,21 @@ var mainList = {
 	open: false
 };
 
-while ( i < 5) {
-	let a = prompt("Какой тип товаров будем продавать?");
-	if((typeof(a)) === 'string' && (typeof(a)) !== null && a !== '' && a.length < 50) {
-		console.log('Все верно!');
-		mainList.shopGoods[i] = a;
+// while ( i < 5) {
+// 	let a = prompt("Какой тип товаров будем продавать?");
+// 	if((typeof(a)) === 'string' && (typeof(a)) !== null && a !== '' && a.length < 50) {
+// 		console.log('Все верно!');
+// 		mainList.shopGoods[i] = a;
 
-		} 
-		else if((typeof(a)) !== 'string' || (typeof(a)) === null || a === '') {
-			console.log("Пожалуйста, введите тип товара");
-			} 
-			else if(a.length > 50) {
-				console.log("Слишком длинное наименование");
-				}
-		i++;
-}
+// 		} 
+// 		else if((typeof(a)) !== 'string' || (typeof(a)) === null || a === '') {
+// 			console.log("Пожалуйста, введите тип товара");
+// 			} 
+// 			else if(a.length > 50) {
+// 				console.log("Слишком длинное наименование");
+// 				}
+// 		i++;
+// }
 
 // do {
 // 	let a = prompt("Какой тип товаров будем продавать?");
@@ -43,17 +43,17 @@ while ( i < 5) {
 // 		i++;
 // } while ( i < 5);
 
-// for (let i = 0; i < 5; i++) {
-// 	let a = prompt("Какой тип товаров будем продавать?");
-// 	if((typeof(a)) === 'string' && (typeof(a)) !== null && a !== '' && a.length < 50) {
-// 		console.log('Все верно!');
-// 		mainList.shopGoods[i] = a;
-// 	} else if((typeof(a)) !== 'string' || (typeof(a)) === null || a === '') {
-// 		console.log("Пожалуйста, введите тип товара");
-// 		} else if(a.length > 50) {
-// 			console.log("Слишком длинное наименование");
-// 			}
-// }
+for (let i = 0; i < 5; i++) {
+	let a = prompt("Какой тип товаров будем продавать?");
+	if((typeof(a)) === 'string' && (typeof(a)) !== null && a !== '' && a.length < 50) {
+		console.log('Все верно!');
+		mainList.shopGoods[i] = a;
+	} else if((typeof(a)) !== 'string' || (typeof(a)) === null || a === '') {
+		console.log("Пожалуйста, введите тип товара");
+		} else if(a.length > 50) {
+			console.log("Слишком длинное наименование");
+			}
+}
 
 if (time < 0) {
 	console.log("Такого просто не может быть");
