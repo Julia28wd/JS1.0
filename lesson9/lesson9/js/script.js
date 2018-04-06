@@ -89,7 +89,7 @@ window.addEventListener('DOMContentLoaded', function() { //пока не заг�
 		close = document.querySelector('.popup-close');
 
 	more.addEventListener('click', function() {
-		more.classList.add('more-splash');
+		this.classList.add('more-splash');
 		overlay.style.display = 'block';
 		document.body.style.overflow = 'hidden';
 	});
@@ -100,7 +100,7 @@ window.addEventListener('DOMContentLoaded', function() { //пока не заг�
 			overlay.style.display = 'block';
 			document.body.style.overflow = 'hidden';
 	        });
-	    };
+	    }
 
 	close.addEventListener('click', function() {
 		overlay.style.display = 'none';
