@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', function(){
-
 	let popupBtn = document.querySelector('#popup-btn'),
 		overlay = document.querySelector('.overlay'),
 		main = document.querySelector('.main'),
@@ -22,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 		ready = document.querySelector('#ready'),
 		mainCards = document.querySelector('.main-cards'),
-		mainCardsItem = mainCards.querySelector('.main-cards-item'),
+		mainCardsItem = mainCards.querySelectorAll('.main-cards-item')[1],
 		createdItem = mainCardsItem.cloneNode(true),
 
 		name = createdItem.querySelector('.name'),
@@ -30,6 +29,10 @@ window.addEventListener('DOMContentLoaded', function(){
 		sex = createdItem.querySelector('.sex'),
 		views = createdItem.querySelector('.views'),
 		bio = createdItem.querySelector('.bio'),
+
+		votingBtn = document.querySelector('#voting'),
+		crimeBtn = document.querySelector('#crime'),
+		resetBtn = document.querySelector('#reset'),
 
 		//объект Кандидат
 		createdCandidate = {
@@ -96,53 +99,53 @@ window.addEventListener('DOMContentLoaded', function(){
 		clothes = clothesMan;
 
 	//проверка и перенос пола в объект
-		radio.addEventListener('change', function() {
-			if (createdSex[0].checked) {
-				createdSkin.style.backgroundImage = 'url("../img/skin/skin-1.png")';
-				createdClothes.style.backgroundImage = 'url("../img/clothes/construct/clothes-1.png")';
-				createdHair.style.backgroundImage = 'url("../img/hair/construct/hair-1.png")';
-				createdShoes.style.backgroundImage = 'url(../img/clothes/construct/shoes.png)';
-			
-				hairMan[0].style.display = 'block';
-				clothesMan[0].style.display = 'block';
-				for (let i = 0; i < 3; i++) {
-					hairWoman[i].style.display = 'none';
-					clothesWoman[i].style.display = 'none';
-					skin[i].style.display = 'none';
-				}
-
-				clothes = clothesMan;
-				hair = hairMan;
-				skin[0].style.display = 'block';
-
-				createdCandidate.skinNum = 1;
-				createdCandidate.hairNum = 1;
-				createdCandidate.clothesNum = 1;
-				createdCandidate.sex = 'Мужской';
-				
-			} else {
-				createdSkin.style.backgroundImage = 'url("../img/skin/skin-4.png")';
-				createdClothes.style.backgroundImage = 'url("../img/clothes/construct/clothes-4.png")';
-				createdHair.style.backgroundImage = 'url("../img/hair/construct/hair-4.png")';
-				createdShoes.style.backgroundImage = 'url(../img/clothes/construct/shoes.png)';
-			
-			hairWoman[0].style.display = 'block';
-			clothesWoman[0].style.display = 'block';
+	radio.addEventListener('change', function() {
+		if (createdSex[0].checked) {
+			createdSkin.style.backgroundImage = 'url("img/skin/skin-1.png")';
+			createdClothes.style.backgroundImage = 'url("img/clothes/construct/clothes-1.png")';
+			createdHair.style.backgroundImage = 'url("img/hair/construct/hair-1.png")';
+			createdShoes.style.backgroundImage = 'url("img/clothes/construct/shoes.png)';
+		
+			hairMan[0].style.display = 'block';
+			clothesMan[0].style.display = 'block';
 			for (let i = 0; i < 3; i++) {
-				hairMan[i].style.display = 'none';
-				clothesMan[i].style.display = 'none';
+				hairWoman[i].style.display = 'none';
+				clothesWoman[i].style.display = 'none';
 				skin[i].style.display = 'none';
 			}
 
-			clothes = clothesWoman;
-			hair = hairWoman;
+			clothes = clothesMan;
+			hair = hairMan;
 			skin[0].style.display = 'block';
 
-			createdCandidate.skinNum = 4;
-			createdCandidate.hairNum = 4;
-			createdCandidate.clothesNum = 4;
-			createdCandidate.sex = 'Женский';
-			}	
+			createdCandidate.skinNum = 1;
+			createdCandidate.hairNum = 1;
+			createdCandidate.clothesNum = 1;
+			createdCandidate.sex = 'Мужской';
+			
+		} else {
+			createdSkin.style.backgroundImage = 'url("img/skin/skin-4.png")';
+			createdClothes.style.backgroundImage = 'url("img/clothes/construct/clothes-4.png")';
+			createdHair.style.backgroundImage = 'url("img/hair/construct/hair-4.png")';
+			createdShoes.style.backgroundImage = 'url(img/clothes/construct/shoes.png)';
+		
+		hairWoman[0].style.display = 'block';
+		clothesWoman[0].style.display = 'block';
+		for (let i = 0; i < 3; i++) {
+			hairMan[i].style.display = 'none';
+			clothesMan[i].style.display = 'none';
+			skin[i].style.display = 'none';
+		}
+
+		clothes = clothesWoman;
+		hair = hairWoman;
+		skin[0].style.display = 'block';
+
+		createdCandidate.skinNum = 4;
+		createdCandidate.hairNum = 4;
+		createdCandidate.clothesNum = 4;
+		createdCandidate.sex = 'Женский';
+		}	
 	});
 
 	//перенос взглядов в объект
@@ -161,13 +164,13 @@ window.addEventListener('DOMContentLoaded', function(){
 	});
 
 	let slideIndex = 1,
-			showIndex = 1,
-			prevSkin = document.querySelector('.skin>.prev'),
-			nextSkin = document.querySelector('.skin>.next'),
-			prevHair = document.querySelector('.hair>.prev'),
-			nextHair = document.querySelector('.hair>.next'),
-			prevClothes = document.querySelector('.clothes>.prev'),
-			nextClothes = document.querySelector('.clothes>.next');
+		showIndex = 1,
+		prevSkin = document.querySelector('.skin>.prev'),
+		nextSkin = document.querySelector('.skin>.next'),
+		prevHair = document.querySelector('.hair>.prev'),
+		nextHair = document.querySelector('.hair>.next'),
+		prevClothes = document.querySelector('.clothes>.prev'),
+		nextClothes = document.querySelector('.clothes>.next');
 
 	//слайдер цвета кожи
 	skinSlides(slideIndex);
@@ -189,7 +192,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			showIndex = slideIndex + 3;
 		}
 		createdCandidate.skinNumber = showIndex;
-		createdSkin.style.backgroundImage = 'url("../img/skin/skin-' + showIndex + '.png")';
+		createdSkin.style.backgroundImage = 'url("img/skin/skin-' + showIndex + '.png")';
 	}
 
 	function plusSlidersSkin(id) {
@@ -225,7 +228,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			showIndex = slideIndex + 3;
 		}
 		createdCandidate.hairNum = showIndex;
-		createdHair.style.backgroundImage = 'url("../img/hair/construct/hair-' + showIndex + '.png")';
+		createdHair.style.backgroundImage = 'url("img/hair/construct/hair-' + showIndex + '.png")';
 	}
 
 	function plusSlidersHair(id) {
@@ -260,7 +263,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			showIndex = slideIndex + 3;
 		}
 		createdCandidate.clothesNum = showIndex;
-		createdClothes.style.backgroundImage = 'url("../img/clothes/construct/clothes-'+ showIndex +'.png")';
+		createdClothes.style.backgroundImage = 'url("img/clothes/construct/clothes-'+ showIndex +'.png")';
 	}
 
 	function plusSlidersСlothes(id) {
@@ -296,22 +299,134 @@ window.addEventListener('DOMContentLoaded', function(){
 			'</div>' + '<div class="photo-clothes">' + '</div>' + '<div class="photo-shoes">' + 
 			'</div>';
 
-			createdItem.querySelector('.photo-candidate').style.cssText = 'position: relative; background: url(../img/skin/skin-' + 
+			createdItem.querySelector('.photo-candidate').style.cssText = 'position: relative; background: url(img/skin/skin-' + 
 			createdCandidate.skinNum + '.png) center no-repeat/cover';
 
 			createdItem.querySelector('.photo-hair').style.cssText = 'position: absolute;	top: 0;	left: 0; width: 100%;' +
-			'height: 100%; background: url(../img/hair/construct/hair-' + createdCandidate.hairNum + 
+			'height: 100%; background: url(img/hair/construct/hair-' + createdCandidate.hairNum + 
 			'.png) center no-repeat/cover';
 
 			createdItem.querySelector('.photo-clothes').style.cssText = 'position: absolute;	top: 0;	left: 0; width: 100%;' +
-			'height: 100%; background: url(../img/clothes/construct/clothes-' + createdCandidate.clothesNum + 
+			'height: 100%; background: url(img/clothes/construct/clothes-' + createdCandidate.clothesNum + 
 			'.png) center no-repeat/cover';
 
 			createdItem.querySelector('.photo-shoes').style.cssText ='position: absolute;	top: 0;	left: 0; width: 100%;' + 
-			'height: 100%; background: url(../img/clothes/construct/shoes.png) center no-repeat/cover';
+			'height: 100%; background: url(img/clothes/construct/shoes.png) center no-repeat/cover';
 
 			mainCardsItem.parentNode.insertBefore(createdItem, mainCardsItem);
+
+			let result = document.querySelectorAll('.result-count'),
+				progress = document.querySelectorAll('.progress-bar');
+
+			for (let i = 0; i < mainCards.children.length; i++) {
+				result[i].innerHTML = '0%';
+				progress[i].style.height = 0 + '%';
+			}
+		}
+	});
+
+	//кнопка "Провести честное голосование"
+	votingBtn.addEventListener('click', function() {
+		let votingResults = [],
+			result = document.querySelectorAll('.result-count'),
+			progress = document.querySelectorAll('.progress-bar'),
+			items = document.querySelectorAll('.main-cards-item');
+
+		votingResults[0] = Math.ceil(Math.random() * 99),
+		votingResults[1] = Math.ceil(Math.random() * (100 - votingResults[0])),
+		votingResults[2] = 100 - votingResults[0] - votingResults[1];
+
+		for (let i = 0; i < mainCards.children.length; i++) {
+			result[i].innerHTML = votingResults[i] + ' %';
+			progress[i].style.height = votingResults[i] + '%';
+			items[i].classList.remove('main-cards-item-active');
+		}
+		let v = votingResults[0],
+			k = 0;
+		for (let i = 1; i < votingResults.length; i++) {
+			if (votingResults[i] > v) {
+				v = votingResults[i];
+				k = i;
+			}
+		}
+		items[k].classList.add('main-cards-item-active');
+		console.log(k);
+	});
+
+	//кнопка "Вмешаться в выборы"
+	crimeBtn.addEventListener('click', function() {
+		let votingResults = [],
+			result = document.querySelectorAll('.result-count'),
+			progress = document.querySelectorAll('.progress-bar'),
+			items = document.querySelectorAll('.main-cards-item');
+
+		votingResults[0] = Math.ceil(Math.random() * 74),
+		votingResults[1] = Math.ceil(Math.random() * (75 - votingResults[0])) + 25,
+		votingResults[2] = 100 - votingResults[0] - votingResults[1];
+
+		for (let i = 0; i < mainCards.children.length; i++) {
+			result[i].innerHTML = votingResults[i] + ' %';
+			progress[i].style.height = votingResults[i] + '%';
+			items[i].classList.remove('main-cards-item-active');
+		}
+		let v = votingResults[0],
+			k = 0;
+		for (let i = 1; i < votingResults.length; i++) {
+			if (votingResults[i] > v) {
+				v = votingResults[i];
+				k = i;
+			}
+		}
+		items[k].classList.add('main-cards-item-active');
+		console.log(k);
+	});
+
+	//кнопка "Сбросить результаты"
+	resetBtn.addEventListener('click', function() {
+		createdCandidate.name = '';
+		createdCandidate.age = '';
+		createdCandidate.bio = '';
+		createdCandidate.sex = 'Мужской';
+		createdCandidate.views = 'Либеральные';
+		createdCandidate.skinNumber = 1;
+		createdCandidate.hairNumber = 1;
+		createdCandidate.clothesNumber = 1;
+
+		//возврат исходных изображений на странице кастомизации
+		createdSkin.style.backgroundImage = 'url("img/skin/skin-1.png")';
+		createdClothes.style.backgroundImage = 'url("img/clothes/construct/clothes-1.png")';
+		createdHair.style.backgroundImage = 'url("img/hair/construct/hair-1.png")';
+		createdShoes.style.backgroundImage = 'url(img/clothes/construct/shoes.png)';
+		
+		for (let i = 0; i < 3; i++) {
+			hairWoman[i].style.display = 'none';
+			clothesWoman[i].style.display = 'none';
+			skin[i].style.display = 'none';
+			hairMan[i].style.display = 'none';
+			clothesMan[i].style.display = 'none';
 		}
 
+		clothes = clothesMan;
+		hair = hairMan;
+
+		skin[0].style.display = 'block';
+		hairMan[0].style.display = 'block';
+		clothesMan[0].style.display = 'block';
+
+		//обнуление данных на странице кастомизации
+		createdName.value = '';
+		createdAge.value = '';
+		if (createdSex[1].checked) {
+			createdSex[1].checked = false;
+			createdSex[0].checked = true;
+		}
+		createdViews.value = "Либеральные";
+		createdBio.value = '';
+
+		//возврат на страницу кастомизации
+		main.style.display = 'none';
+		custom.style.display = 'flex';
+		createdItem.parentNode.removeChild(createdItem);
 	});
 });
+
