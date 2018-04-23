@@ -191,7 +191,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		} else {
 			showIndex = slideIndex + 3;
 		}
-		createdCandidate.skinNumber = showIndex;
+		createdCandidate.skinNum = showIndex;
 		createdSkin.style.backgroundImage = 'url("img/skin/skin-' + showIndex + '.png")';
 	}
 
@@ -294,6 +294,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			bio.textContent = createdCandidate.bio;
 
 			//перенос внешности на новую карточку
+			createdItem.querySelector('.photo').classList.remove('photo-2');
 			createdItem.querySelector('.photo').classList.add('photo-candidate');
 			createdItem.querySelector('.photo').innerHTML = '<div class="photo-hair">' + 
 			'</div>' + '<div class="photo-clothes">' + '</div>' + '<div class="photo-shoes">' + 
@@ -388,9 +389,9 @@ window.addEventListener('DOMContentLoaded', function(){
 		createdCandidate.bio = '';
 		createdCandidate.sex = 'Мужской';
 		createdCandidate.views = 'Либеральные';
-		createdCandidate.skinNumber = 1;
-		createdCandidate.hairNumber = 1;
-		createdCandidate.clothesNumber = 1;
+		createdCandidate.skinNum = 1;
+		createdCandidate.hairNum = 1;
+		createdCandidate.clothesNum = 1;
 
 		//возврат исходных изображений на странице кастомизации
 		createdSkin.style.backgroundImage = 'url("img/skin/skin-1.png")';
