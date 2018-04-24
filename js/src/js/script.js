@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', function(){
 	createdName.addEventListener('change', function() {
 		if (!isNaN(createdName.value) || (createdName.value === '')) {
 			alert ('Необходимо указать ФИО кандидата, состоящее из букв');
-			console.log(createdName.value);
+			createdName.value = '';
 		} else {
 			createdCandidate.name = createdName.value.toUpperCase();
 		}
@@ -70,20 +70,20 @@ window.addEventListener('DOMContentLoaded', function(){
 	createdAge.addEventListener('change', function() {
 		if (createdAge.value === '') {
 			alert('Необходимо указать возраст'); 
-			createdAge.value= '';
+			createdAge.value = '';
 		} else if (isNaN(createdAge.value)) {
 			alert('Необходимо указать возраст в цифрах');
-			createdAge.value= '';
+			createdAge.value = '';
 		} else if (+createdAge.value < 35) {
 			alert('Кандидат в президенты РФ должен быть не моложе 35 лет');
-			createdAge.value= '';
+			createdAge.value = '';
 		} else if (+createdAge.value > 65) {
 			alert('Слишком старый кандидат');
-			createdAge.value= '';
+			createdAge.value = '';
 		} else { 
-			if (+createdAge.value%10 == 1) {
+			if (+createdAge.value % 10 == 1) {
 				createdCandidate.age = createdAge.value + ' год';
-			} else if (+createdAge.value%10 == 2 || createdAge.value%10 == 3 || createdAge.value%10 == 4) {
+			} else if (+createdAge.value % 10 == 2 || createdAge.value%10 == 3 || createdAge.value%10 == 4) {
 				createdCandidate.age = createdAge.value + ' года';
 			} else {
 				createdCandidate.age = createdAge.value + ' лет';
