@@ -327,14 +327,24 @@ window.addEventListener('DOMContentLoaded', function(){
 	});
 
 	//кнопка "Провести честное голосование"
-	votingBtn.addEventListener('click', function() {
+	votingBtn.addEventListener('click', function(){
+		results(0);  //ничего никому не прибавляем
+	});
+
+	// //кнопка "Вмешаться в выборы"
+	crimeBtn.addEventListener('click', function(){
+		results(25); //дарим 25% кандидату
+	});
+
+	//функция случайного распределения голосов
+	function results (r) {
 		let votingResults = [],
 			result = document.querySelectorAll('.result-count'),
 			progress = document.querySelectorAll('.progress-bar'),
 			items = document.querySelectorAll('.main-cards-item');
 
-		votingResults[0] = Math.ceil(Math.random() * 99),
-		votingResults[1] = Math.ceil(Math.random() * (100 - votingResults[0])),
+		votingResults[0] = Math.ceil(Math.random() * (99 - r)),
+		votingResults[1] = Math.ceil(Math.random() * ((100 - r) - votingResults[0])) + r,
 		votingResults[2] = 100 - votingResults[0] - votingResults[1];
 
 		for (let i = 0; i < mainCards.children.length; i++) {
@@ -351,36 +361,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			}
 		}
 		items[k].classList.add('main-cards-item-active');
-		console.log(k);
-	});
-
-	//кнопка "Вмешаться в выборы"
-	crimeBtn.addEventListener('click', function() {
-		let votingResults = [],
-			result = document.querySelectorAll('.result-count'),
-			progress = document.querySelectorAll('.progress-bar'),
-			items = document.querySelectorAll('.main-cards-item');
-
-		votingResults[0] = Math.ceil(Math.random() * 74),
-		votingResults[1] = Math.ceil(Math.random() * (75 - votingResults[0])) + 25,
-		votingResults[2] = 100 - votingResults[0] - votingResults[1];
-
-		for (let i = 0; i < mainCards.children.length; i++) {
-			result[i].innerHTML = votingResults[i] + ' %';
-			progress[i].style.height = votingResults[i] + '%';
-			items[i].classList.remove('main-cards-item-active');
-		}
-		let v = votingResults[0],
-			k = 0;
-		for (let i = 1; i < votingResults.length; i++) {
-			if (votingResults[i] > v) {
-				v = votingResults[i];
-				k = i;
-			}
-		}
-		items[k].classList.add('main-cards-item-active');
-		console.log(k);
-	});
+	}
 
 	//кнопка "Сбросить результаты"
 	resetBtn.addEventListener('click', function() {
