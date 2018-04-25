@@ -33,6 +33,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		votingBtn = document.querySelector('#voting'),
 		crimeBtn = document.querySelector('#crime'),
 		resetBtn = document.querySelector('#reset'),
+		votingResults = [],
 
 		//объект Кандидат
 		createdCandidate = {
@@ -58,11 +59,22 @@ window.addEventListener('DOMContentLoaded', function(){
 
 	//проверка и перенос ФИО в объект
 	createdName.addEventListener('change', function() {
-		if (!isNaN(createdName.value) || (createdName.value === '')) {
-			alert ('Необходимо указать ФИО кандидата, состоящее из букв');
+		let s = createdName.value;
+		s = s.replace (/\r\n?|\n/g, ' ').replace (/ {2,}/g, ' ').replace (/^ /, '').replace (/ $/, '');
+		let q = s.split (' ');
+
+		if (!isNaN(createdName.value) || (createdName.value === '' || (q.length < 3))) {
+			alert ('Необходимо указать ФИО кандидата, состоящее из трех слов русскими буквами');
 			createdName.value = '';
-		} else {
-			createdCandidate.name = createdName.value.toUpperCase();
+		} 	else {
+				for (let i = 0; i < createdName.value.length; i++) {
+				if (/[^а-я ]+/i.test(createdName.value[i])) {
+					alert ('Введите ФИО из русских символов');
+					createdName.value = '';
+				} else {
+					createdCandidate.name = createdName.value.toUpperCase();
+				}
+			}
 		}
 	});
 
@@ -155,14 +167,15 @@ window.addEventListener('DOMContentLoaded', function(){
 
 	//перенос биографии в объект
 	createdBio.addEventListener('change', function() {
-		if (!isNaN(createdBio.value) || (createdBio.value === '')) {
-			alert ('Необходимо корректно заполнить биографию кандидата');
+		if (!isNaN(createdBio.value) || (createdBio.value === '' || createdBio.value.length < 10)) {
+			alert ('Напишите про своего кандидата');
 			console.log(createdBio.value);
 		} else {
 			createdCandidate.bio = createdBio.value;
 		}
 	});
 
+	//стрелки для слайдеров
 	let slideIndex = 1,
 		showIndex = 1,
 		prevSkin = document.querySelector('.skin>.prev'),
@@ -320,47 +333,83 @@ window.addEventListener('DOMContentLoaded', function(){
 				progress = document.querySelectorAll('.progress-bar');
 
 			for (let i = 0; i < mainCards.children.length; i++) {
-				result[i].innerHTML = '0%';
+				result[i].textContent = '0%';
 				progress[i].style.height = 0 + '%';
 			}
 		}
 	});
 
 	//кнопка "Провести честное голосование"
-	votingBtn.addEventListener('click', function(){
-		results(0);  //ничего никому не прибавляем
-	});
-
-	// //кнопка "Вмешаться в выборы"
-	crimeBtn.addEventListener('click', function(){
-		results(25); //дарим 25% кандидату
-	});
-
-	//функция случайного распределения голосов
-	function results (r) {
-		let votingResults = [],
-			result = document.querySelectorAll('.result-count'),
+	votingBtn.addEventListener('click', function() {
+		let result = document.querySelectorAll('.result-count');
 			progress = document.querySelectorAll('.progress-bar'),
 			items = document.querySelectorAll('.main-cards-item');
-
-		votingResults[0] = Math.ceil(Math.random() * (99 - r)),
-		votingResults[1] = Math.ceil(Math.random() * ((100 - r) - votingResults[0])) + r,
+		votingResults[0] = Math.ceil(Math.random() * 99),
+		votingResults[1] = Math.ceil(Math.random() * (100 - votingResults[0])),
 		votingResults[2] = 100 - votingResults[0] - votingResults[1];
+ 
+		winner ();
+	});
+
+	//кнопка "Вмешаться в голосование"
+	crimeBtn.addEventListener('click', function(){
+		let result = document.querySelectorAll('.result-count'),
+			firstRandom;
+
+		if (votingResults[0] > 25) {
+			firstRandom = Math.ceil(Math.random() * 25);
+		} else {
+			firstRandom = Math.ceil(Math.random() * votingResults[0]);
+		}
+
+		if (votingResults[1] > 75) {
+			votingResults[1] += votingResults[0] + votingResults[2];
+			votingResults[0] = 0;
+			votingResults[2] = 0;
+			alert ("Это уже слишком! Вы купили все голоса!");
+		} else {
+			votingResults[1] += 25;
+			votingResults[0] -= firstRandom;
+			votingResults[2] -= 25 - firstRandom;
+		}
+		winner();
+	});
+
+	//поиск победителя
+	function winner () {
+		let result = document.querySelectorAll('.result-count'),
+		progress = document.querySelectorAll('.progress-bar'),
+		items = document.querySelectorAll('.main-cards-item');
+		if (votingResults[2] < 0) {
+			votingResults[2] = 0;
+			votingResults[0] = 100 - votingResults[1] - votingResults[2];
+		}
+		
+		if (isNaN(votingResults[0]) && isNaN(votingResults[1]) && isNaN(votingResults[2])) {
+			alert('Сначала проведите голосование!');
+			votingResults = [0, 0, 0];
+		}
 
 		for (let i = 0; i < mainCards.children.length; i++) {
-			result[i].innerHTML = votingResults[i] + ' %';
+			console.log(votingResults[i]);
+			result[i].textContent = votingResults[i] + '%';
 			progress[i].style.height = votingResults[i] + '%';
 			items[i].classList.remove('main-cards-item-active');
-		}
+		} 
+
 		let v = votingResults[0],
 			k = 0;
 		for (let i = 1; i < votingResults.length; i++) {
 			if (votingResults[i] > v) {
 				v = votingResults[i];
 				k = i;
-			}
+			} 
 		}
 		items[k].classList.add('main-cards-item-active');
+
+			if ((votingResults[0] == 0) && (votingResults[1] == 0) && (votingResults[2] == 0)) {
+				items[k].classList.remove('main-cards-item-active');
+		}
 	}
 
 	//кнопка "Сбросить результаты"
@@ -409,6 +458,17 @@ window.addEventListener('DOMContentLoaded', function(){
 		main.style.display = 'none';
 		custom.style.display = 'flex';
 		createdItem.parentNode.removeChild(createdItem);
+
+		let result = document.querySelectorAll('.result-count'),
+			progress = document.querySelectorAll('.progress-bar');
+
+		for (let i = 0; i < mainCards.children.length; i++) {
+			result[i].innerHTML = '0%';
+			progress[i].style.height = 0 + '%';
+			items[i].classList.remove('main-cards-item-active');
+			votingResults = [];
+		}
+
 	});
 });
 
